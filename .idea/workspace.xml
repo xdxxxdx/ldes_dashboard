@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="3e1baf71-3c92-44f1-897c-930c1df13e4c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy_test_suite.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy_test_suite.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-services/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test-services/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-services/src/main/java/be/vlaanderen/ldes/handlers/Crawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-services/src/main/java/be/vlaanderen/ldes/handlers/Crawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_must.zip" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_must.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_9.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_9.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

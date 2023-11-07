@@ -35,15 +35,20 @@ public class Crawler {
         visitedURLs.add(starting_url);
     }
     public Crawler run() {
-        while(!urlQueue.isEmpty()) {
+        int loop = 3;
+        while(!urlQueue.isEmpty()&&loop>0) {
             String pageUrl = urlQueue.remove();
             try {
                 Model page = crawlPage(pageUrl);
                 crawledGraph.add(page);
+                //System.out.println("Crawled page: " + pageUrl);
+                //System.out.println("page: " + page);
+                //.out.println("loop" + loop);
             }
             catch (Exception e) {
                 throw new RuntimeException(e);
             }
+            loop = loop-1;
         }
         return this;
     }
@@ -60,7 +65,6 @@ public class Crawler {
         // Download page and turn into RDF model.
         HttpResponse<String> page = fetchPage(url);
         Model retrievedGraph = pageToModel(page, url);
-
         // Find all tree:relations and add them to the download queue.
         extractRelations(retrievedGraph).forEach((String relation_url) -> {
             // Skip visited pages.

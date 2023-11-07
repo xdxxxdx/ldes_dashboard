@@ -23,8 +23,9 @@
             the relative path of the scriptlet file considering the root of the test suite (the same applies for documentation and artifact imports).
             Note that scriptlets can also be reused across test suites and even specifications - you only need to refer to the other test suite's identifier
             (which should be unique) when calling it.
-        -->
+
         <call id="step1" path="scriptlets/ingestDataset.xml"/>
+        -->
         <!-- Step 2: Fetch the processed data from the endpoint of the LDES Server (by time). -->
         <log>"Process crawling data..."</log>
 

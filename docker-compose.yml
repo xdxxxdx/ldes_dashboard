@@ -68,6 +68,17 @@ services:
       gitb-srv:
         condition: service_started
 
+  # Replace blue with yellow :)
+#  gitb-ui-proxy:
+#    build: proxy
+#    volumes:
+#     - ./proxy/overrides:/usr/local/apache2/htdocs/
+#     - ${PWD}/my-httpd.conf /usr/local/apache2/conf/httpd.conf
+#    ports:
+#     - "9001:80"
+#  #
+#  # Test Bed core components - END.
+#  #
   test-services:
     # The test-services component are the extension services supporting our test cases. Note how we have a "build" definition
     # here as we will build the component from the sources provided in directory "./test-services".
@@ -91,3 +102,27 @@ services:
       - validator.resourceRoot=/config
     ports:
       - 8081:8080
+  # 
+  # PoC specific containers for the LDES server - START
+  #
+  # These are added here for the PoC's installation convenience to act as a SUT. Eventually these would be removed from this docker-compose file.
+  # When removing them remember to adapt the systems' configuration in the Test Bed UI to point to the new address of ldes-server.
+  ldes-server:
+    image: ldes/ldes-server:2.1.0-SNAPSHOT
+    ports:
+          - 8080:8080
+    environment:
+    - SPRING_CONFIG_LOCATION=/config/
+    volumes:
+    - ./config/ldes-server/ldes-server.yml:/config/application.yml:ro
+    depends_on:
+    - ldes-mongodb
+  ldes-mongodb:
+    image: mongo:latest
+    ports:
+          - 27017:27017
+    
+
+  # 
+  # PoC specific containers for the LDES server - END
+  #
