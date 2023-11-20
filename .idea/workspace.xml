@@ -6,16 +6,27 @@
   <component name="ChangeListManager">
     <list default="true" id="3e1baf71-3c92-44f1-897c-930c1df13e4c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy_test_suite.bat" beforeDir="false" afterPath="$PROJECT_DIR$/deploy_test_suite.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_suite_must.zip" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_must.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_suite_must/test_cases.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_7.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_must/test_cases/test_case_8.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_suite_must/test_suite.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_must/test_suite.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_optional.zip" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_optional.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_optional/test_cases.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_optional/test_cases/test_case_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_optional/test_cases/test_case_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_optional/test_cases/test_case_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_optional/test_cases/test_case_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_optional/test_cases/test_case_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_optional/test_cases/test_case_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_optional/test_cases/test_case_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_optional/test_cases/test_case_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_optional/test_cases/test_case_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_optional/test_suite.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_optional/test_suite.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_should.zip" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_should.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_should/test_cases.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_should/test_cases/test_case_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_should/test_cases/test_case_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_should/test_cases/test_case_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_should/test_cases/test_case_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_should/test_cases/test_case_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_should/test_cases/test_case_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_should/test_cases/test_case_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_should/test_cases/test_case_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_should/test_cases/test_case_5.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_should/test_cases/test_case_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_should/test_cases/test_case_6.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_suite_should/test_suite.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test_suite_should/test_suite.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

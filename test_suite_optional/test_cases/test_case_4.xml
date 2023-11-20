@@ -14,8 +14,29 @@
     </actors>
     <steps stopOnError="false">
         <!-- Step 1: Data provider posts KBO dataset to the LDES Server. -->
-        <call id="step1" path="scriptlets/ingestDataset.xml"/>
+<!--     <call id="step1" path="scriptlets/ingestDataset.xml"/>-->
         <!-- Step 2: Fetch the processed data from the endpoint of the LDES Server (by location). -->
+        <assign to="parameters{endpointByLocation}">$SYSTEM{endpointByLocation}</assign>
+        <assign to="parameters{endpointByTime}">$SYSTEM{endpointByTime}</assign>
+        <assign to="parameters{endpointByName}">$SYSTEM{endpointByName}</assign>
+        <assign to="parameters{LdesStreamUrl}">$SYSTEM{endpointAccess}</assign>
+        <process output="processedShapes" handler="TemplateProcessor">
+            <input name="parameters">$parameters</input>
+            <input name="template">$shapesTemplate</input>
+            <input name="syntax">'freemarker'</input>
+        </process>
+        <assign to="shape1{ruleSet}">$processedShapes</assign>
+        <assign to="shape1{ruleSyntax}">"application/turtle"</assign>
+        <!--
+            When assigning to a new variable ("shapesToUse") and add append="true" this can only be a list (only lists can be appended to).
+            Here we are creating a list named "shapesToUse" and adding as the first element the map "shape1" we created just before. We could add
+            more maps here if we wanted to add additional shape files for the validation.
+         -->
+        <assign to="shapesToUse" append="true">$shape1</assign>
+
+        <if title="If endpointByLocation is set ">
+        <cond>$SYSTEM{endpointByLocation} != "#"</cond>
+        <then>
         <log>"Process crawling data..."</log>
         <process desc="crawl geo fragmented data" output="crawledDataGeo" handler="$DOMAIN{processingServiceAddress}" operation="crawl">
             <input name="viewURI">$SYSTEM{endpointByLocation}</input>
@@ -28,15 +49,7 @@
             the template's values. Note that we use Freemarker so you besides simple placeholder replacements (like we do in this
             case), you can also generate more complex data using conditionals, looping etc.
         -->
-        <assign to="parameters{endpointByLocation}">$SYSTEM{endpointByLocation}</assign>
-        <assign to="parameters{endpointByTime}">$SYSTEM{endpointByTime}</assign>
-        <assign to="parameters{endpointByName}">$SYSTEM{endpointByName}</assign>
-        <assign to="parameters{LdesStreamUrl}">$SYSTEM{endpointAccess}</assign>
-        <process output="processedShapes" handler="TemplateProcessor">
-            <input name="parameters">$parameters</input>
-            <input name="template">$shapesTemplate</input>
-            <input name="syntax">'freemarker'</input>
-        </process>
+
         <!-- 
             Here we use the SHACL validator to trigger a validation of RDF content using SHACL shapes (that we generate from the
             template as explained above). The validator is configured to have a single supported validation type ("any" - assumed
@@ -45,14 +58,7 @@
             and "addRulesToReport" so that the validation report includes the validated content and the shapes used.
         -->
         <!-- When assigning to a variable "shape1" using a named key "ruleSet" the engine creates automatically a map ("shape1") with a key ("ruleSet"). -->
-        <assign to="shape1{ruleSet}">$processedShapes</assign>
-        <assign to="shape1{ruleSyntax}">"application/turtle"</assign>
-        <!-- 
-            When assigning to a new variable ("shapesToUse") and add append="true" this can only be a list (only lists can be appended to).
-            Here we are creating a list named "shapesToUse" and adding as the first element the map "shape1" we created just before. We could add
-            more maps here if we wanted to add additional shape files for the validation.
-         -->
-        <assign to="shapesToUse" append="true">$shape1</assign>
+
         <verify id="step3" desc="Validate crawled geospatial graph" handler="$DOMAIN{shaclValidatorServiceAddress}">
             <input name="contentToValidate">$crawledDataGeo</input>
             <input name="contentSyntax">"application/turtle"</input>
@@ -60,7 +66,12 @@
             <input name="addRulesToReport">true()</input>
             <input name="externalRules">$shapesToUse</input>
         </verify>
+        </then>
+        </if>
 
+        <if title="If endpointByTime is set ">
+        <cond>$SYSTEM{endpointByTime} != "#"</cond>
+        <then>
         <log>"Process crawling data..."</log>
         <process desc="crawl time fragmented data" output="crawledDataTime" handler="$DOMAIN{processingServiceAddress}" operation="crawl">
             <input name="viewURI">$SYSTEM{endpointByTime}</input>
@@ -72,7 +83,12 @@
             <input name="addRulesToReport">true()</input>
             <input name="externalRules">$shapesToUse</input>
         </verify>
+        </then>
+        </if>
 
+        <if title="If endpointByName is set ">
+        <cond>$SYSTEM{endpointByName} != "#"</cond>
+        <then>
         <log>"Process crawling data..."</log>
         <process desc="crawl string fragmented data" output="crawledDataString" handler="$DOMAIN{processingServiceAddress}" operation="crawl">
             <input name="viewURI">$SYSTEM{endpointByName}</input>
@@ -84,6 +100,9 @@
             <input name="addRulesToReport">true()</input>
             <input name="externalRules">$shapesToUse</input>
         </verify>
+        </then>
+        </if>
+
     </steps>
     <!-- Definition of final summary message. -->
     <output>

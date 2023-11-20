@@ -14,20 +14,9 @@
     </actors>
     <steps stopOnError="false">
         <!-- Step 1: Data provider posts KBO dataset to the LDES Server. -->
-        <call id="step1" path="scriptlets/ingestDataset.xml"/>
+<!--        <call id="step1" path="scriptlets/ingestDataset.xml"/>-->
         <!-- Step 2: Fetch the processed data from the endpoint of the LDES Server (by location). -->
-        <log>"Process crawling data..."</log>
-        <process desc="crawl geo fragmented data" output="crawledDataGeo" handler="$DOMAIN{processingServiceAddress}" operation="crawl">
-            <input name="viewURI">$SYSTEM{endpointByLocation}</input>
-        </process>
-        <log>"Validating the TreeNode to TreeCollection relation with the crawled data..."</log>
-        <!-- Step 3: Validate the fetched view page of the LDES Server with SHACL. -->
-        <!-- 
-            We use here the TemplateProcessor (built-in processing handler) to generate the actual shapes to use. We load
-            the template (see "shapesTemplate" from the imports above) in which we will used the passed "parameters" to provide
-            the template's values. Note that we use Freemarker so you besides simple placeholder replacements (like we do in this
-            case), you can also generate more complex data using conditionals, looping etc.
-        -->
+       
         <assign to="parameters{endpointByLocation}">$SYSTEM{endpointByLocation}</assign>
         <assign to="parameters{endpointByTime}">$SYSTEM{endpointByTime}</assign>
         <assign to="parameters{endpointByName}">$SYSTEM{endpointByName}</assign>
@@ -47,12 +36,29 @@
         <!-- When assigning to a variable "shape1" using a named key "ruleSet" the engine creates automatically a map ("shape1") with a key ("ruleSet"). -->
         <assign to="shape1{ruleSet}">$processedShapes</assign>
         <assign to="shape1{ruleSyntax}">"application/turtle"</assign>
+        <assign to="shapesToUse" append="true">$shape1</assign>
+        <if title="If endpointByLocation is set ">
+        <cond>$SYSTEM{endpointByLocation} != "#"</cond>
+        <then>
+        <log>"Process crawling data..."</log>
+        <process desc="crawl geo fragmented data" output="crawledDataGeo" handler="$DOMAIN{processingServiceAddress}" operation="crawl">
+            <input name="viewURI">$SYSTEM{endpointByLocation}</input>
+        </process>
+        <log>"Validating the TreeNode to TreeCollection relation with the crawled data..."</log>
+        <!-- Step 3: Validate the fetched view page of the LDES Server with SHACL. -->
+        <!-- 
+            We use here the TemplateProcessor (built-in processing handler) to generate the actual shapes to use. We load
+            the template (see "shapesTemplate" from the imports above) in which we will used the passed "parameters" to provide
+            the template's values. Note that we use Freemarker so you besides simple placeholder replacements (like we do in this
+            case), you can also generate more complex data using conditionals, looping etc.
+        -->
+
         <!-- 
             When assigning to a new variable ("shapesToUse") and add append="true" this can only be a list (only lists can be appended to).
             Here we are creating a list named "shapesToUse" and adding as the first element the map "shape1" we created just before. We could add
             more maps here if we wanted to add additional shape files for the validation.
          -->
-        <assign to="shapesToUse" append="true">$shape1</assign>
+
         <verify id="step3" desc="Validate crawled geospatial graph" handler="$DOMAIN{shaclValidatorServiceAddress}">
             <input name="contentToValidate">$crawledDataGeo</input>
             <input name="contentSyntax">"application/turtle"</input>
@@ -60,7 +66,12 @@
             <input name="addRulesToReport">true()</input>
             <input name="externalRules">$shapesToUse</input>
         </verify>
+        </then>
+        </if>
 
+        <if title="If endpointByTime is set ">
+        <cond>$SYSTEM{endpointByTime} != "#"</cond>
+        <then>
         <log>"Process crawling data..."</log>
         <process desc="crawl time fragmented data" output="crawledDataTime" handler="$DOMAIN{processingServiceAddress}" operation="crawl">
             <input name="viewURI">$SYSTEM{endpointByTime}</input>
@@ -72,7 +83,12 @@
             <input name="addRulesToReport">true()</input>
             <input name="externalRules">$shapesToUse</input>
         </verify>
+        </then>
+        </if>
 
+        <if title="If endpointByName is set ">
+        <cond>$SYSTEM{endpointByName} != "#"</cond>
+        <then>
         <log>"Process crawling data..."</log>
         <process desc="crawl string fragmented data" output="crawledDataString" handler="$DOMAIN{processingServiceAddress}" operation="crawl">
             <input name="viewURI">$SYSTEM{endpointByName}</input>
@@ -84,6 +100,9 @@
             <input name="addRulesToReport">true()</input>
             <input name="externalRules">$shapesToUse</input>
         </verify>
+        </then>
+        </if>
+
     </steps>
     <!-- Definition of final summary message. -->
     <output>
