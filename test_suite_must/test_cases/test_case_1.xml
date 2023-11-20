@@ -14,7 +14,6 @@
     </actors>
     <steps stopOnError="false">
         <!-- Step 1: Data provider posts KBO dataset to the LDES Server. -->
-        <call id="step1" path="scriptlets/ingestDataset.xml"/>
         <!-- Step 2: Access the endpoint of the LDES server. -->
         <send id="step2" desc="Get view page" from="DataProvider" to="LDESServer" handler="$DOMAIN{messagingServiceAddress}">
             <input name="contentType">"application/turtle"</input>

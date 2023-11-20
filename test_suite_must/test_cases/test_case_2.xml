@@ -1,4 +1,4 @@
-<testcase id="ts1_tc2" xmlns="http://www.gitb.com/tdl/v1/" xmlns:gitb="http://www.gitb.com/core/v1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<testcase xmlns:gitb="http://www.gitb.com/core/v1/" id="ts1_tc2" xmlns="http://www.gitb.com/tdl/v1/">
     <metadata>
         <gitb:name>[TC2] TreeNode to TreeCollection</gitb:name>
         <gitb:version>1.0</gitb:version>
@@ -48,13 +48,10 @@
             more maps here if we wanted to add additional shape files for the validation.
          -->
 
-        <if>
-            <cond> $SYSTEM{endpointByLocation} = NULL </cond>
+        <if title="If endpointByLocation is set ">
+            <cond>$SYSTEM{endpointByLocation} != "#"</cond>
             <then>
-                <assign to="$STEP_STATUS{step1}">'SUCCESS'</assign>
-            </then>
-            <else>
-                <log>"Process crawling data..."$SYSTEM{endpointByLocation}</log>
+                <log>"Process crawling data..."</log>
                 <process desc="crawl geo fragmented data" output="crawledDataGeo" handler="$DOMAIN{processingServiceAddress}" operation="crawl">
                     <input name="viewURI">$SYSTEM{endpointByLocation}</input>
                 </process>
@@ -66,10 +63,14 @@
                     <input name="addRulesToReport">true()</input>
                     <input name="externalRules">$shapesToUse</input>
                 </verify>
-
-            </else>
+            </then>
         </if>
-        <log>"Process crawling data..."</log>
+
+
+        <if title="If endpointByTime is set ">
+            <cond>$SYSTEM{endpointByTime} != "#"</cond>
+            <then>
+                <log>"Process crawling data..."</log>
         <process desc="crawl time fragmented data" output="crawledDataTime" handler="$DOMAIN{processingServiceAddress}" operation="crawl">
             <input name="viewURI">$SYSTEM{endpointByTime}</input>
         </process>
@@ -80,8 +81,13 @@
             <input name="addRulesToReport">true()</input>
             <input name="externalRules">$shapesToUse</input>
         </verify>
+            </then>
+        </if>
 
-        <log>"Process crawling data..."</log>
+        <if title="If endpointByName is set ">
+            <cond>$SYSTEM{endpointByName} != "#"</cond>
+            <then>
+                <log>"Process crawling data..."</log>
         <process desc="crawl string fragmented data" output="crawledDataString" handler="$DOMAIN{processingServiceAddress}" operation="crawl">
             <input name="viewURI">$SYSTEM{endpointByName}</input>
         </process>
@@ -92,6 +98,10 @@
             <input name="addRulesToReport">true()</input>
             <input name="externalRules">$shapesToUse</input>
         </verify>
+            </then>
+        </if>
+
+
     </steps>
     <!-- Definition of final summary message. -->
     <output>
